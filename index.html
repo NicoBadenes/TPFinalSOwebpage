@@ -11,8 +11,9 @@
   <div id="terminal" class="terminal-container">
     <div id="output"></div>
     <div id="input-line">
-      <span class="prompt">user@so-terminal:~$ </span>
-      <input type="text" id="command-input" autofocus autocomplete="off" spellcheck="false" />
+        <span class="prompt">JoseSanchez@so-terminal:~$ </span>
+        <span id="current-command"></span><span id="cursor">|</span>
+        <input type="text" id="command-input" autocomplete="off" spellcheck="false" style="opacity:0; position:absolute; left:-9999px;" />
     </div>
   </div>
 
