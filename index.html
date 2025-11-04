@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SO Terminal Educativa</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+  <div id="terminal" class="terminal-container">
+    <div id="output"></div>
+    <div id="input-line">
+      <span class="prompt">user@so-terminal:~$ </span>
+      <input type="text" id="command-input" autofocus autocomplete="off" spellcheck="false" />
+    </div>
+  </div>
+
+  <!-- Contenido de temas (oculto por defecto) -->
+  <div id="content-container" class="hidden">
+    <h1 id="topic-title"></h1>
+    <div id="topic-content"></div>
+    <button id="back-btn" class="btn-back">← Volver a la terminal</button>
+  </div>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
