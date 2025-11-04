@@ -312,42 +312,66 @@ const backBtn = document.getElementById("back-btn");
 
 // Mostrar mensaje inicial
 output.innerHTML += "Bienvenido a la Terminal Educativa de Sistemas Operativos.\n";
-output.innerHTML += 'Escribe "help" para ver los comandos disponibles.\n\n';
+output.innerHTML += 'Escribe "help" para ver los comandos disponibles.\n';
 
 // Enfocar al cargar
 input.focus();
 
+// Variables globales para manejar el input visual
+let currentCommand = "";
+const currentCommandSpan = document.getElementById("current-command");
+const cursorSpan = document.getElementById("cursor");
+
 // Manejar comandos
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    const cmd = input.value.trim().toLowerCase();
-    input.value = "";
+    const cmd = currentCommand.trim().toLowerCase();
+    currentCommand = "";
+    currentCommandSpan.textContent = "";
 
     if (!cmd) return;
 
     // Mostrar comando en la terminal
-    output.innerHTML += `<span class="prompt">user@so-terminal:~$</span> ${cmd}\n`;
+    output.innerHTML += `<span class="prompt">JoseSanchez@so-terminal:~$ </span> ${cmd}<br>`;
 
     if (validCommands[cmd]) {
       const res = validCommands[cmd]();
-      if (res) output.innerHTML += res + "\n";
+      if (res) output.innerHTML += res + "<br>";
       if (cmd === "exit") {
         setTimeout(() => location.reload(), 1000);
       }
     } else if (topics[cmd]) {
-      // Mostrar tema
       topicTitle.textContent = topics[cmd].title;
       topicContent.innerHTML = topics[cmd].content;
       terminal.classList.add("hidden");
       contentContainer.classList.remove("hidden");
     } else {
-      output.innerHTML += `\x1b${cmd}: Command not found.\x1b`;
+      output.innerHTML += `<span style="color: var(--error);">Command not found: ${cmd}.</span><br>`;
     }
 
     // Scroll automático
     terminal.scrollTop = terminal.scrollHeight;
+
+    // Reiniciar el cursor y el input visual
+    cursorSpan.style.visibility = "visible";
+    input.focus();
+
+  } else if (e.key === "Backspace") {
+    if (currentCommand.length > 0) {
+      currentCommand = currentCommand.slice(0, -1);
+      currentCommandSpan.textContent = currentCommand;
+    }
+  } else if (e.key.length === 1) {
+    currentCommand += e.key;
+    currentCommandSpan.textContent = currentCommand;
   }
+
+  // Evitar comportamiento predeterminado del input (como mover el cursor)
+  e.preventDefault();
 });
+
+// Enfocar el input al cargar
+input.focus();
 
 // Volver a la terminal
 backBtn.addEventListener("click", () => {
